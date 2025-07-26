@@ -1,8 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { motion } from "motion/react"
+import { Link, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Card } from '../components/ui/Card/Card';
+import { LoginForm } from '../components/forms/LoginForm/LoginForm';
 
 const LoginPage: React.FC = () => {
+    const navigate = useNavigate();
+
+    const handleLogin = (data: { email: string; password: string }) => {
+        console.log('Login data:', data);
+        // Здесь будет логика логина
+        navigate('/');
+    };
+
     return (
         <motion.div
             className="page auth-page"
@@ -13,49 +23,36 @@ const LoginPage: React.FC = () => {
         >
             <div className="auth-container">
                 <motion.div
-                    className="auth-card"
                     initial={{ y: 50, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.1, duration: 0.4 }}
                 >
-                    <h1>Welcome Back</h1>
-                    <p>Sign in to your account</p>
-
-                    <form className="auth-form">
-                        <div className="form-group">
-                            <label>Email</label>
-                            <input
-                                type="email"
-                                placeholder="Enter your email"
-                                className="form-input"
-                            />
+                    <Card className="auth-card">
+                        {/* Заголовок */}
+                        <div className="auth-header">
+                            <h1>Welcome Back</h1>
+                            <p>Sign in to your account</p>
                         </div>
 
-                        <div className="form-group">
-                            <label>Password</label>
-                            <input
-                                type="password"
-                                placeholder="Enter your password"
-                                className="form-input"
-                            />
-                        </div>
+                        {/* Форма */}
+                        <LoginForm
+                            onSubmit={handleLogin}
+                            isLoading={false}
+                        />
 
-                        <button type="submit" className="auth-button">
-                            Sign In
-                        </button>
-                    </form>
-
-                    <div className="auth-footer">
-                        <p>
-                            Don't have an account?{' '}
-                            <Link to="/register" className="auth-link-text">
-                                Sign up
+                        {/* Футер */}
+                        <div className="auth-footer">
+                            <p>
+                                Don't have an account?{' '}
+                                <Link to="/register" className="auth-link-text">
+                                    Sign up
+                                </Link>
+                            </p>
+                            <Link to="/" className="back-link">
+                                ← Back to Home
                             </Link>
-                        </p>
-                        <Link to="/" className="back-link">
-                            ← Back to Home
-                        </Link>
-                    </div>
+                        </div>
+                    </Card>
                 </motion.div>
             </div>
         </motion.div>

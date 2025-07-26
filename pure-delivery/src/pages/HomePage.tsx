@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from "motion/react"
+import { motion } from 'framer-motion';
 import { useThemeStore } from '../store/themeStore';
+import { Button } from '../components/ui/Button/Button';
+import {ThemeToggle} from "../components/ui/ThemeToggle/ThemeToggle";
+import MainLogo from '../components/MainLogo/MainLogo';
 
 const HomePage: React.FC = () => {
     const { theme, toggleTheme } = useThemeStore();
@@ -15,21 +18,20 @@ const HomePage: React.FC = () => {
             transition={{ duration: 0.3 }}
         >
             <div className="page-content">
-                <h1>Pure Delivery</h1>
-                <p>Fresh food, delivered fast</p>
+                <MainLogo theme={theme}/>
 
-                <div className="theme-controls">
-                    <button onClick={toggleTheme} className="theme-button">
-                        Current: {theme} theme
-                    </button>
-                </div>
-
+                <ThemeToggle/>
                 <div className="auth-links">
-                    <Link to="/login" className="auth-link">
-                        Login
+                    <Link to="/login">
+                        <Button variant="primary">
+                            Login
+                        </Button>
                     </Link>
-                    <Link to="/register" className="auth-link">
-                        Register
+
+                    <Link to="/register">
+                        <Button variant="outline">
+                            Register
+                        </Button>
                     </Link>
                 </div>
             </div>
