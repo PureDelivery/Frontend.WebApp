@@ -1,6 +1,9 @@
 # Frontend.WebApp
 🌐 React web application for Pure Delivery platform. Modern responsive UI with TypeScript, Redux, real-time order tracking, payment integration, and seamless user experience.
 
+### v0.3.1 - 31.07.2025
+- Endpoints routes fixed to make dev process more clear
+
 ### v0.3.0 - 30.07.2025
 - Profile functionality
    - Main page with Quick Actions and customer summary
