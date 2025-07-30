@@ -1,0 +1,73 @@
+.loyalty-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  h2 {
+    color: var(--text-primary);
+    margin: 0 0 2rem 0;
+    font-size: 1.5rem;
+  }
+
+  .loyalty-balance-card {
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--primary-50) 0%, var(--primary-100) 100%);
+
+    .balance-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      svg {
+        color: var(--primary-500);
+      }
+
+      h3 {
+        margin: 0 0 0.5rem 0;
+        color: var(--text-primary);
+      }
+
+      .balance-amount {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-600);
+        margin: 0;
+      }
+    }
+  }
+
+  .loyalty-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+
+    .loyalty-info-card {
+      padding: 1.5rem;
+
+      svg {
+        color: var(--primary-500);
+        margin-bottom: 1rem;
+      }
+
+      h4 {
+        color: var(--text-primary);
+        margin: 0 0 1rem 0;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 1.5rem;
+        color: var(--text-secondary);
+
+        li {
+          margin-bottom: 0.5rem;
+        }
+      }
+
+      p {
+        color: var(--text-secondary);
+        margin: 0;
+      }
+    }
+  }
+}

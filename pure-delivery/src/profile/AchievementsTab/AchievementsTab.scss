@@ -1,0 +1,141 @@
+.achievements-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  h2 {
+    color: var(--text-primary);
+    margin: 0 0 2rem 0;
+    font-size: 1.5rem;
+  }
+
+  .upcoming-section {
+    h3 {
+      color: var(--text-primary);
+      margin: 2rem 0 1rem 0;
+      font-size: 1.25rem;
+    }
+
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+
+      .achievement-card {
+        padding: 1.5rem;
+        opacity: 0.7;
+
+        &.upcoming {
+          border: 1px dashed var(--border-primary);
+        }
+
+        .achievement-icon {
+          color: var(--text-secondary);
+          margin-bottom: 1rem;
+        }
+
+        .achievement-content {
+          h4 {
+            color: var(--text-primary);
+            margin: 0 0 0.5rem 0;
+          }
+
+          p {
+            color: var(--text-secondary);
+            margin: 0 0 1rem 0;
+            font-size: 0.9rem;
+          }
+
+          .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+
+            .progress-fill {
+              height: 100%;
+              background: var(--primary-500);
+              transition: width 0.3s ease;
+            }
+          }
+
+          .progress-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+          }
+
+          .reward {
+            font-size: 0.85rem;
+            color: var(--primary-600);
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+}
+
+.address-badges {
+  .default-toggle {
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+
+    svg {
+      transition: all 0.2s ease;
+      color: var(--text-tertiary);
+
+      &.filled {
+        color: var(--action-orange);
+        fill: var(--action-orange);
+      }
+    }
+
+    &:hover:not(:disabled) {
+      border-color: var(--action-orange);
+      background: var(--action-orange-bg);
+    }
+
+    &.active {
+      background: var(--action-orange);
+      border-color: var(--action-orange);
+      color: white;
+
+      svg {
+        color: white;
+        fill: white;
+      }
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .mini-spinner {
+      width: 12px;
+      height: 12px;
+      border: 2px solid transparent;
+      border-top: 2px solid currentColor;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

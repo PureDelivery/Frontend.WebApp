@@ -12,12 +12,14 @@ import { PublicRoute } from './components/PublicRoute';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
-import DashboardPage from './pages/DashboardPage';
 
 import { Toaster } from 'react-hot-toast';
 
 import './App.scss';
 import EmailVerificationPage from "./pages/EmailVerificationPage";
+import MainPage from "./pages/MainPage";
+import ProfilePage from "./pages/ProfilePage";
+import {UnauthorizedModal} from "./components/modals/UnauthorizedModal/UnauthorizedModal";
 
 export function App() {
     const { theme, setTheme } = useThemeStore();
@@ -64,24 +66,27 @@ export function App() {
                     />
 
                     {/* Защищенные роуты - только для залогиненных С подтвержденным email */}
-                    <Route
-                        path="/dashboard"
-                        element={
-                            <ProtectedRoute requireEmailConfirmation={true}>
-                                <DashboardPage />
-                            </ProtectedRoute>
-                        }
-                    />
+                    <Route path="/main" element={
+                        <ProtectedRoute>
+                            <MainPage />
+                        </ProtectedRoute>
+                    }/>
+
+                    <Route path="/profile" element={
+                        <ProtectedRoute>
+                            <ProfilePage />
+                        </ProtectedRoute>
+                    } />
 
                     {/* Fallback редиректы */}
                     <Route
                         path="*"
                         element={
                             // Если залогинен и email подтвержден -> дашборд
-                            // Иначе -> домой
+                            // Иначе -> Login
                             isAuthenticated && isEmailConfirmed
-                                ? <Navigate to="/dashboard" replace />
-                                : <Navigate to="/" replace />
+                                ? <Navigate to="/main" replace />
+                                : <Navigate to="/login" replace />
                         }
                     />
                 </Routes>
@@ -109,6 +114,7 @@ export function App() {
                         },
                     }}
                 />
+                <UnauthorizedModal />
             </div>
         </Router>
     );

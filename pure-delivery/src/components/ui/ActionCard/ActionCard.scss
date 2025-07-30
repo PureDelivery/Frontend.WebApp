@@ -1,0 +1,95 @@
+.action-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.action-card {
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border-left: 4px solid transparent;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--action-card-shadow-hover);
+  }
+
+  .action-icon {
+    padding: 0.75rem;
+    border-radius: 12px;
+    background: var(--bg-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 56px;
+    min-height: 56px;
+  }
+
+  .action-content {
+    flex: 1;
+
+    h3 {
+      color: var(--text-primary);
+      margin: 0 0 0.25rem 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    p {
+      color: var(--text-secondary);
+      margin: 0;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+  }
+
+  // Color variants с использованием переменных
+  &--blue {
+    border-left-color: var(--action-blue);
+
+    .action-icon {
+      color: var(--action-blue);
+      background: var(--action-blue-bg);
+    }
+  }
+
+  &--green {
+    border-left-color: var(--action-green);
+
+    .action-icon {
+      color: var(--action-green);
+      background: var(--action-green-bg);
+    }
+  }
+
+  &--orange {
+    border-left-color: var(--action-orange);
+
+    .action-icon {
+      color: var(--action-orange);
+      background: var(--action-orange-bg);
+    }
+  }
+
+  &--red {
+    border-left-color: var(--action-red);
+
+    .action-icon {
+      color: var(--action-red);
+      background: var(--action-red-bg);
+    }
+  }
+
+  &--purple {
+    border-left-color: var(--action-purple);
+
+    .action-icon {
+      color: var(--action-purple);
+      background: var(--action-purple-bg);
+    }
+  }
+}

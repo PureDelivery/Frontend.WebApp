@@ -21,10 +21,6 @@ const MainLogo: React.FC<MainLogoProps> = ({ theme }) => {
                     <p className="login-main-logo-subtitle">Fresh food, delivered fast</p>
                 </div>
             </div>
-
-            <div className="login-main-logo-text">
-                &copy; 2025 Pure Delivery. All rights reserved.
-            </div>
         </div>
     );
 };

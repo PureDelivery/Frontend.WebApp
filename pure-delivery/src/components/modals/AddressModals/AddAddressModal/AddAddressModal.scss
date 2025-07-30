@@ -1,0 +1,219 @@
+// AddAddressModal.scss
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.address-modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-card);
+
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 24px 0 24px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 24px;
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      svg {
+        color: var(--action-blue);
+      }
+
+      h2 {
+        color: var(--text-primary);
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 0;
+      }
+    }
+
+    .close-button {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover:not(:disabled) {
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .modal-form {
+    padding: 0 24px 24px 24px;
+
+    .form-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 32px;
+
+      .form-row {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .form-row-split {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+
+        @media (max-width: 480px) {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+      }
+
+      .checkbox-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 0;
+
+        input[type="checkbox"] {
+          width: 18px;
+          height: 18px;
+          border: 2px solid var(--border-color);
+          border-radius: 4px;
+          background: var(--bg-secondary);
+          cursor: pointer;
+          position: relative;
+          appearance: none;
+          transition: all 0.2s ease;
+
+          &:checked {
+            background: var(--action-blue);
+            border-color: var(--action-blue);
+
+            &::after {
+              content: '✓';
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              color: white;
+              font-size: 12px;
+              font-weight: bold;
+            }
+          }
+
+          &:hover:not(:disabled) {
+            border-color: var(--action-blue);
+          }
+
+          &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+          }
+        }
+
+        .checkbox-label {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          color: var(--text-primary);
+          font-size: 14px;
+          font-weight: 500;
+          cursor: pointer;
+          user-select: none;
+
+          svg {
+            color: var(--action-orange);
+          }
+
+          &:has(input:disabled) {
+            opacity: 0.6;
+            cursor: not-allowed;
+          }
+        }
+      }
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+
+      @media (max-width: 480px) {
+        flex-direction: column-reverse;
+
+        button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+// Responsive improvements
+@media (max-width: 768px) {
+  .modal-overlay {
+    padding: 10px;
+  }
+
+  .address-modal {
+    .modal-header {
+      padding: 20px 20px 0 20px;
+
+      .header-content h2 {
+        font-size: 1.25rem;
+      }
+    }
+
+    .modal-form {
+      padding: 0 20px 20px 20px;
+    }
+  }
+}
+
+// Dark theme adjustments
+.dark {
+  .address-modal {
+    .modal-header {
+      border-bottom-color: var(--border-color);
+    }
+
+    .modal-form {
+      .modal-actions {
+        border-top-color: var(--border-color);
+      }
+    }
+  }
+}

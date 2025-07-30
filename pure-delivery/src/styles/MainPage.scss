@@ -1,0 +1,22 @@
+.main-page {
+  min-height: 100vh;
+  padding: 2rem;
+  background: var(--bg-primary);
+
+  .page-content {
+    max-width: 1400px;
+    min-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+
+    .page-content {
+      gap: 2rem;
+    }
+  }
+}

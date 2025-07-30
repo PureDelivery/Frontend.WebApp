@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 // Типы из вашего бэкенда
-interface CustomerSessionDto {
+export interface CustomerSessionDto {
     id: string;
     email: string;
     fullName: string;
@@ -11,7 +11,7 @@ interface CustomerSessionDto {
     defaultAddress?: CustomerAddressSessionDto;
 }
 
-interface CustomerAddressSessionDto {
+export interface CustomerAddressSessionDto {
     id: string;
     label: string;
     fullAddress: string;
@@ -24,7 +24,7 @@ interface CustomerAddressSessionDto {
     floor: string;
 }
 
-interface AuthState {
+export interface AuthState {
     // Состояние сессии
     isAuthenticated: boolean;
     sessionId: string | null;
@@ -66,6 +66,9 @@ export const useAuthStore = create<AuthState>()(
 
             // Очищаем сессию при логауте
             clearSession: () => {
+
+                console.log("Clearing session")
+                console.log(localStorage.getItem('sessionId'))
                 set({
                     isAuthenticated: false,
                     sessionId: null,
@@ -73,9 +76,12 @@ export const useAuthStore = create<AuthState>()(
                     isEmailConfirmed: false,
                     pendingVerificationEmail: null,
                 });
+                console.log(localStorage.getItem('sessionId'))
 
-                // Очищаем cookie сессии (если используется)
-                document.cookie = 'sessionId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+                // Очищаем localStorage (если set не удалил)
+                localStorage.removeItem('sessionId')
+                console.log(localStorage.getItem('sessionId'))
+
             },
 
             // Обновляем данные клиента

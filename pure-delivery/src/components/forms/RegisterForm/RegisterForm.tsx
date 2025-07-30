@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Input } from '../../ui/Input/Input';
 import { Button } from '../../ui/Button/Button';
 import {RegisterFormData} from "../../../services/authService";
+import { Eye, EyeOff } from 'lucide-react';
+import './RegisterForm.scss';
 
 interface RegisterFormProps {
     onSubmit: (data: RegisterFormData) => void;
@@ -23,6 +25,8 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
         confirmPassword: '',
         dateOfBirth: ''
     });
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const [validationErrors, setValidationErrors] = useState<Partial<RegisterFormData>>({});
 
@@ -132,27 +136,45 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
                 onChange={handleChange('dateOfBirth')}
                 max={new Date().toISOString().split('T')[0]}
             />
-            <Input
-                label="Password"
-                type="password"
-                placeholder="Create password"
-                value={formData.password}
-                onChange={handleChange('password')}
-                required
-                disabled={isLoading}
-                error={validationErrors.password}
-            />
+            <div className="password-field">
+                <Input
+                    label="Password"
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Create password"
+                    value={formData.password}
+                    onChange={handleChange('password')}
+                    required
+                    disabled={isLoading}
+                    error={validationErrors.password}
+                />
+                <button
+                    type="button"
+                    className="password-toggle"
+                    onClick={() => setShowPassword(!showPassword)}
+                >
+                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
+            </div>
 
-            <Input
-                label="Confirm Password"
-                type="password"
-                placeholder="Confirm password"
-                value={formData.confirmPassword}
-                onChange={handleChange('confirmPassword')}
-                required
-                disabled={isLoading}
-                error={validationErrors.confirmPassword}
-            />
+            <div className="password-field">
+                <Input
+                    label="Confirm Password"
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    placeholder="Confirm password"
+                    value={formData.confirmPassword}
+                    onChange={handleChange('confirmPassword')}
+                    required
+                    disabled={isLoading}
+                    error={validationErrors.confirmPassword}
+                />
+                <button
+                    type="button"
+                    className="password-toggle"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                >
+                    {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
+            </div>
 
             <Button
                 type="submit"

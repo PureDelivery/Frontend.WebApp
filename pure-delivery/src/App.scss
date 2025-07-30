@@ -12,6 +12,33 @@
   --text-tertiary: rgba(255, 255, 255, 0.6);
   --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.2);
+
+  // Переменные для кнопок
+  --button-primary-bg: linear-gradient(135deg, #7e6c31, #5104c1);
+  --button-primary-color: #ffffff;
+  --button-primary-shadow: rgba(102, 126, 234, 0.3);
+  --button-outline-bg: var(--bg-secondary);
+  --button-outline-color: var(--text-primary);
+  --button-outline-border: var(--border-color);
+  --button-outline-hover-bg: var(--bg-secondary-hover);
+  --button-danger-bg: linear-gradient(135deg, #ef4444, #dc2626);
+  --button-danger-color: #ffffff;
+  --button-danger-shadow: rgba(239, 68, 68, 0.3);
+
+  // Action card colors
+  --action-blue: #034fcb;
+  --action-blue-bg: rgba(59, 130, 246, 0.1);
+  --action-green: #08e69d;
+  --action-green-bg: rgba(16, 185, 129, 0.1);
+  --action-orange: #f59e0b;
+  --action-orange-bg: rgba(245, 158, 11, 0.1);
+  --action-red: #ee1919;
+  --action-red-bg: rgba(239, 68, 68, 0.1);
+  --action-purple: #5c39a5;
+  --action-purple-bg: rgba(139, 92, 246, 0.1);
+
+  // Action card hover shadow
+  --action-card-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
 .dark {
@@ -25,8 +52,34 @@
   --text-tertiary: rgba(241, 245, 249, 0.6);
   --shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
-}
 
+  // Переменные для кнопок в темной теме
+  --button-primary-bg: linear-gradient(135deg, #667eea, #764ba2);
+  --button-primary-color: #ffffff;
+  --button-primary-shadow: rgba(59, 130, 246, 0.4);
+  --button-outline-bg: var(--bg-secondary);
+  --button-outline-color: var(--text-primary);
+  --button-outline-border: var(--border-color);
+  --button-outline-hover-bg: var(--bg-secondary-hover);
+  --button-danger-bg: linear-gradient(135deg, #f87171, #ef4444);
+  --button-danger-color: #ffffff;
+  --button-danger-shadow: rgba(248, 113, 113, 0.4);
+
+  // Action card colors для темной темы
+  --action-blue: #84b4f0;
+  --action-blue-bg: rgba(96, 165, 250, 0.15);
+  --action-green: #82edc6;
+  --action-green-bg: rgba(52, 211, 153, 0.15);
+  --action-orange: #f5c33f;
+  --action-orange-bg: rgba(251, 191, 36, 0.15);
+  --action-red: #f87171;
+  --action-red-bg: rgba(248, 113, 113, 0.15);
+  --action-purple: #ad94f8;
+  --action-purple-bg: rgba(167, 139, 250, 0.15);
+
+  // Action card hover shadow для темной темы
+  --action-card-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
 // Общие стили
 .App {
   min-height: 100vh;
@@ -39,9 +92,25 @@
 .page {
   min-height: 100vh;
   display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 20px;
+}
+
+.page-center {
+  min-height: 100vh;
+  display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
+}
+
+.forgot-password-link {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  margin-top: 8px;
 }
 
 // Главная страница

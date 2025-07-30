@@ -5,13 +5,14 @@ import { useThemeStore } from '../store/themeStore';
 import { Button } from '../components/ui/Button/Button';
 import {ThemeToggle} from "../components/ui/ThemeToggle/ThemeToggle";
 import MainLogo from '../components/MainLogo/MainLogo';
+import RightsReserved from "../components/ui/RightsReserved/RightsReserved";
 
 const HomePage: React.FC = () => {
     const { theme, toggleTheme } = useThemeStore();
 
     return (
         <motion.div
-            className="page home-page"
+            className="page-center home-page"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -19,7 +20,7 @@ const HomePage: React.FC = () => {
         >
             <div className="page-content">
                 <MainLogo theme={theme}/>
-
+                <RightsReserved/>
                 <ThemeToggle/>
                 <div className="auth-links">
                     <Link to="/login">

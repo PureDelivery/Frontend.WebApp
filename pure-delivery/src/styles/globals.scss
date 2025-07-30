@@ -144,3 +144,33 @@ a {
 .text-secondary { color: var(--color-text-secondary); }
 .text-success { color: var(--color-success); }
 .text-danger { color: var(--color-danger); }
+
+
+
+.password-field {
+  position: relative;
+
+  .password-toggle {
+    position: absolute;
+    right: 12px;
+    top: calc(50% + 15px); // Учитываем высоту лейбла
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    z-index: 1;
+
+    &:hover {
+      color: var(--text-primary);
+      background: var(--bg-secondary);
+    }
+  }
+
+  input {
+    padding-right: 48px;
+  }
+}

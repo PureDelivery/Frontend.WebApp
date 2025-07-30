@@ -60,7 +60,6 @@
   background: linear-gradient(45deg, var(--text-primary), var(--text-secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
 
   @media (min-width: 768px) {
     font-size: 3rem;
@@ -85,19 +84,5 @@
 
   @media (min-width: 1024px) {
     font-size: 1.25rem;
-  }
-}
-
-.login-main-logo-text {
-  font-family: var(--font-family);
-  font-size: 0.875rem;
-  color: var(--text-tertiary);
-  text-align: center;
-  font-weight: 300;
-  letter-spacing: 0.025em;
-  opacity: 0.8;
-
-  @media (min-width: 768px) {
-    font-size: 0.9rem;
   }
 }
