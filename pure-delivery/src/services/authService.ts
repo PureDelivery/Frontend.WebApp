@@ -22,7 +22,7 @@ export const authService = {
     async authenticate(data: AuthenticateRequest): Promise<BaseResponse<AuthDto>> {
         try {
             console.log('Authenticating user with data:', data)
-            const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.AUTHENTICATE}`, {
+            const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.IDENTITY_SERVICE.AUTH_CONTROLLER.AUTHENTICATE}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ export const authService = {
                 Object.entries(requestData).filter(([_, v]) => v !== undefined)
             );
 
-            const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.ADD_CUSTOMER}`, {
+            const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.IDENTITY_SERVICE.AUTH_CONTROLLER.ADD_CUSTOMER}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ export const authService = {
 
     async verifyOtp(email: string, otpCode: string): Promise<BaseResponse<any>> {
         try {
-            const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.VERIFY_OTP}`, {
+            const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.IDENTITY_SERVICE.AUTH_CONTROLLER.VERIFY_OTP}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -102,7 +102,7 @@ export const authService = {
 
     async resendOtp(email: string): Promise<BaseResponse<any>> {
         try {
-            const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.RESEND_OTP}`, {
+            const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.IDENTITY_SERVICE.AUTH_CONTROLLER.RESEND_OTP}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -122,7 +122,7 @@ export const authService = {
 
     async checkEmailAvailability(email: string): Promise<BaseResponse<boolean>> {
         try {
-            const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.CHECK_EMAIL_AVAILABILITY(email)}`, {
+            const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.IDENTITY_SERVICE.AUTH_CONTROLLER.CHECK_EMAIL_AVAILABILITY(email)}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -151,7 +151,7 @@ export const authService = {
             }
 
             // Вызываем API для logout
-            const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.LOGOUT}`, {
+            const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.IDENTITY_SERVICE.AUTH_CONTROLLER.LOGOUT}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -188,7 +188,7 @@ export const authService = {
 
     async requestForgotPassword(email: string): Promise<BaseResponse<boolean>> {
         try {
-            const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.REQUEST_FORGOT_PASSWORD}`, {
+            const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.IDENTITY_SERVICE.AUTH_CONTROLLER.REQUEST_FORGOT_PASSWORD}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -207,7 +207,7 @@ export const authService = {
 
     async changePasswordWithOtp(data: ChangePasswordWithOtpRequest): Promise<BaseResponse<boolean>> {
         try {
-            const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.FORGOT_PASSWORD}`, {
+            const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.IDENTITY_SERVICE.AUTH_CONTROLLER.FORGOT_PASSWORD}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -235,7 +235,7 @@ export const authService = {
                 };
             }
 
-            const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.CHANGE_PASSWORD_SIMPLE}`, {
+            const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.IDENTITY_SERVICE.AUTH_CONTROLLER.CHANGE_PASSWORD_SIMPLE}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

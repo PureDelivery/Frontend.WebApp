@@ -32,7 +32,7 @@ export const profileService = {
 
     async getCustomerSummary(customerId: string): Promise<BaseResponse<CustomerSummaryDto>> {
         try {
-            const response = await ApiService.request(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.GET_CUSTOMER_SUMMARY(customerId)}`, {
+            const response = await ApiService.request(`${API_CONFIG.BASE_URL}${API_CONFIG.IDENTITY_SERVICE.CUSTOMER_CONTROLLER.GET_CUSTOMER_SUMMARY(customerId)}`, {
                 method: 'GET',
                 headers: this.getHeaders(),
             });
@@ -51,7 +51,7 @@ export const profileService = {
 
     async updateProfile(customerId: string, data: UpdateProfileRequest): Promise<BaseResponse<boolean>> {
         try {
-            const response = await ApiService.request(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.UPDATE_PROFILE(customerId)}`, {
+            const response = await ApiService.request(`${API_CONFIG.BASE_URL}${API_CONFIG.IDENTITY_SERVICE.PROFILE_CONTROLLER.UPDATE_PROFILE(customerId)}`, {
                 method: 'PUT',
                 headers: this.getHeaders(),
                 body: JSON.stringify(data),
@@ -69,7 +69,7 @@ export const profileService = {
 
     async uploadAvatar(customerId: string, formData: FormData): Promise<BaseResponse<string>> {
         try {
-            const response = await ApiService.request(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.UPLOAD_AVATAR(customerId)}`, {
+            const response = await ApiService.request(`${API_CONFIG.BASE_URL}${API_CONFIG.IDENTITY_SERVICE.PROFILE_CONTROLLER.UPLOAD_AVATAR(customerId)}`, {
                 method: 'POST',
                 headers: this.getHeaders(false), // Не добавляем Content-Type для FormData
                 body: formData,
@@ -88,7 +88,7 @@ export const profileService = {
     // Address methods
     async getCustomerAddresses(customerId: string): Promise<BaseResponse<CustomerAddressDto[]>> {
         try {
-            const response = await ApiService.request(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.GET_CUSTOMER_ADDRESSES(customerId)}`, {
+            const response = await ApiService.request(`${API_CONFIG.BASE_URL}${API_CONFIG.IDENTITY_SERVICE.ADDRESS_CONTROLLER.GET_CUSTOMER_ADDRESSES(customerId)}`, {
                 method: 'GET',
                 headers: this.getHeaders(),
             });
@@ -106,7 +106,7 @@ export const profileService = {
     async addAddress(customerId: string, data: CreateAddressRequest): Promise<BaseResponse<CustomerAddressDto>> {
         try {
             console.log(data)
-            const response = await ApiService.request(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.ADD_ADDRESS(customerId)}`, {
+            const response = await ApiService.request(`${API_CONFIG.BASE_URL}${API_CONFIG.IDENTITY_SERVICE.ADDRESS_CONTROLLER.ADD_ADDRESS(customerId)}`, {
                 method: 'POST',
                 headers: this.getHeaders(),
                 body: JSON.stringify(data),
@@ -124,7 +124,7 @@ export const profileService = {
 
     async updateAddress(addressId: string, data: UpdateAddressRequest): Promise<BaseResponse<boolean>> {
         try {
-            const response = await ApiService.request(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.UPDATE_ADDRESS(addressId)}`, {
+            const response = await ApiService.request(`${API_CONFIG.BASE_URL}${API_CONFIG.IDENTITY_SERVICE.ADDRESS_CONTROLLER.UPDATE_ADDRESS(addressId)}`, {
                 method: 'PUT',
                 headers: this.getHeaders(),
                 body: JSON.stringify(data),
@@ -142,7 +142,7 @@ export const profileService = {
 
     async deleteAddress(addressId: string): Promise<BaseResponse<boolean>> {
         try {
-            const response = await ApiService.request(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.DELETE_ADDRESS(addressId)}`, {
+            const response = await ApiService.request(`${API_CONFIG.BASE_URL}${API_CONFIG.IDENTITY_SERVICE.ADDRESS_CONTROLLER.DELETE_ADDRESS(addressId)}`, {
                 method: 'DELETE',
                 headers: this.getHeaders(),
             });
@@ -159,7 +159,7 @@ export const profileService = {
 
     async setDefaultAddress(customerId: string, addressId: string): Promise<BaseResponse<boolean>> {
         try {
-            const response = await ApiService.request(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.SET_DEFAULT_ADDRESS(customerId, addressId)}`, {
+            const response = await ApiService.request(`${API_CONFIG.BASE_URL}${API_CONFIG.IDENTITY_SERVICE.ADDRESS_CONTROLLER.SET_DEFAULT_ADDRESS(customerId, addressId)}`, {
                 method: 'PUT',
                 headers: this.getHeaders(),
             });
@@ -176,7 +176,7 @@ export const profileService = {
 
     async getCustomerLoyalty(customerId: string): Promise<BaseResponse<CustomerLoyaltyDto>> {
         try {
-            const response = await ApiService.request(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.GET_CUSTOMER_LOYALTY(customerId)}`, {
+            const response = await ApiService.request(`${API_CONFIG.BASE_URL}${API_CONFIG.IDENTITY_SERVICE.CUSTOMER_CONTROLLER.GET_CUSTOMER_LOYALTY(customerId)}`, {
                 method: 'GET',
                 headers: this.getHeaders(),
             });
@@ -193,7 +193,7 @@ export const profileService = {
 
     async getCustomerProfileInfo(customerId: string): Promise<BaseResponse<CustomerProfileInfoDto>> {
         try {
-            const response = await ApiService.request(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.GET_CUSTOMER_PROFILE_INFO(customerId)}`, {
+            const response = await ApiService.request(`${API_CONFIG.BASE_URL}${API_CONFIG.IDENTITY_SERVICE.CUSTOMER_CONTROLLER.GET_CUSTOMER_PROFILE_INFO(customerId)}`, {
                 method: 'GET',
                 headers: this.getHeaders(),
             });
@@ -211,7 +211,7 @@ export const profileService = {
     async deleteCustomer(customerId: string): Promise<BaseResponse<boolean>> {
         try {
 
-            const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.DELETE_CUSTOMER(customerId)}`, {
+            const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.IDENTITY_SERVICE.AUTH_CONTROLLER.DELETE_CUSTOMER(customerId)}`, {
                 method: 'DELETE',
                 headers: this.getHeaders()
             });
