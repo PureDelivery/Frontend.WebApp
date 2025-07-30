@@ -1,0 +1,141 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+.delete-account-modal {
+  background: var(--bg-primary);
+  border-radius: 12px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 2rem 1rem 2rem;
+    border-bottom: 1px solid var(--border-primary);
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+
+      .danger-icon {
+        color: var(--danger-500);
+      }
+
+      h3 {
+        color: var(--text-primary);
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 600;
+      }
+    }
+
+    .close-button {
+      background: none;
+      border: none;
+      padding: 0.5rem;
+      border-radius: 8px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+      }
+    }
+  }
+
+  .modal-content {
+    padding: 1.5rem 2rem;
+
+    .warning-section {
+      margin-bottom: 1.5rem;
+
+      .warning-text {
+        color: var(--danger-500);
+        font-weight: 600;
+        margin-bottom: 1rem;
+        font-size: 1rem;
+      }
+
+      p {
+        color: var(--text-secondary);
+        line-height: 1.5;
+        margin-bottom: 0.75rem;
+      }
+    }
+
+    .data-list {
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      padding: 1rem 1.5rem;
+      margin: 1.5rem 0;
+      border-left: 4px solid var(--danger-500);
+
+      li {
+        color: var(--text-secondary);
+        margin-bottom: 0.5rem;
+        line-height: 1.4;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .final-warning {
+      color: var(--text-primary);
+      font-weight: 500;
+      font-size: 0.9rem;
+      text-align: center;
+      margin: 1.5rem 0 0 0;
+      padding: 1rem;
+      background: var(--warning-50);
+      border-radius: 8px;
+      border: 1px solid var(--warning-200);
+    }
+  }
+
+  .modal-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    padding: 1rem 2rem 2rem 2rem;
+    border-top: 1px solid var(--border-primary);
+
+    @media (max-width: 480px) {
+      flex-direction: column-reverse;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}
+
+// Dark mode adjustments
+[data-theme="dark"] {
+  .delete-account-modal {
+    .final-warning {
+      background: rgba(251, 191, 36, 0.1);
+      border-color: rgba(251, 191, 36, 0.3);
+    }
+  }
+}

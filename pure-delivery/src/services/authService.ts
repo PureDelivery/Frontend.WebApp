@@ -120,6 +120,25 @@ export const authService = {
         }
     },
 
+    async checkEmailAvailability(email: string): Promise<BaseResponse<boolean>> {
+        try {
+            const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.CHECK_EMAIL_AVAILABILITY(email)}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+
+            const result: BaseResponse<any> = await response.json();
+            return result;
+        } catch (error) {
+            return {
+                isSuccess: false,
+                error: 'Network error occurred'
+            };
+        }    },
+
     async logout(): Promise<boolean> {
         try {
             const sessionId = localStorage.getItem('sessionId');

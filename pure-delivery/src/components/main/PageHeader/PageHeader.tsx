@@ -9,6 +9,7 @@ import MainLogo from '../../MainLogo/MainLogo';
 import { CustomerProfileDto } from '../../../interfaces/CustomerProfileDto';
 import { authService } from '../../../services/authService';
 import './PageHeader.scss';
+import {CustomerSummaryDto} from "../../../interfaces/CustomerSummaryDto";
 
 interface PageHeaderProps {
     title: string;
@@ -17,7 +18,7 @@ interface PageHeaderProps {
     showLogout?: boolean;
     showLogo?: boolean;
     showAvatar?: boolean;
-    profile?: CustomerProfileDto | null;
+    customerSummary?: CustomerSummaryDto | null;
 }
 
 export const PageHeader: React.FC<PageHeaderProps> = ({
@@ -27,11 +28,10 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
                                                           showLogout = false,
                                                           showLogo = true,
                                                           showAvatar = false,
-                                                          profile = null
+                                                          customerSummary = null
                                                       }) => {
     const navigate = useNavigate();
     const { theme } = useThemeStore();
-    const { customer } = useAuthStore();
     const [isLoggingOut, setIsLoggingOut] = useState(false);
 
     const handleLogout = async () => {
@@ -55,8 +55,8 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
             <div className="header-right">
                 {showAvatar && (
                     <UserAvatar
-                        src={profile?.avatarUrl}
-                        alt={`${customer?.fullName} avatar`}
+                        src={customerSummary?.avatarUrl}
+                        alt={`${customerSummary?.fullName} avatar`}
                         size="md"
                     />
                 )}

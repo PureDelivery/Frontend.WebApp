@@ -48,7 +48,7 @@ export const AchievementsTab: React.FC<AchievementsTabProps> = ({ customer }) =>
         >
             <h2>Achievements</h2>
 
-            <div style={{color: "red"}}>TEST ACHIEVEMENTS FROM FRONTEND</div>
+            <div style={{color: "red"}}>ADD ACHIEVEMENTS MICROSERVICE</div>
 
             {/* No achievements yet */}
             <Card className="empty-state">

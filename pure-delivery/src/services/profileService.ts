@@ -8,6 +8,10 @@ import {CustomerWithProfileDto,
     from '../interfaces/CustomerProfileDto';
 import {CreateAddressRequest, UpdateAddressRequest} from "../interfaces/AddressRequests";
 import ApiService from './apiService';
+import {CustomerSummaryDto} from "../interfaces/CustomerSummaryDto";
+import {CustomerProfileInfoDto} from "../interfaces/CustomerProfileInfoDto";
+import {CustomerLoyaltyDto} from "../interfaces/CustomerLoyaltyDto";
+import {CreateCustomerResultDto} from "../interfaces/CreateCustomerResultDto";
 
 export const profileService = {
     // Helper для добавления Authorization header
@@ -26,15 +30,14 @@ export const profileService = {
         return headers;
     },
 
-    // Profile methods
-    async getCustomerWithProfile(customerId: string): Promise<BaseResponse<CustomerWithProfileDto>> {
+    async getCustomerSummary(customerId: string): Promise<BaseResponse<CustomerSummaryDto>> {
         try {
-            const response = await ApiService.request(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.GET_CUSTOMER_WITH_PROFILE(customerId)}`, {
+            const response = await ApiService.request(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.GET_CUSTOMER_SUMMARY(customerId)}`, {
                 method: 'GET',
                 headers: this.getHeaders(),
             });
 
-            const result: BaseResponse<CustomerWithProfileDto> = await response.json();
+            const result: BaseResponse<CustomerSummaryDto> = await response.json();
             return result;
         } catch (error) {
             return {
@@ -43,6 +46,8 @@ export const profileService = {
             };
         }
     },
+
+    // Profile methods
 
     async updateProfile(customerId: string, data: UpdateProfileRequest): Promise<BaseResponse<boolean>> {
         try {
@@ -80,23 +85,6 @@ export const profileService = {
         }
     },
 
-    async getLoyaltyPointsBalance(customerId: string): Promise<BaseResponse<number>> {
-        try {
-            const response = await ApiService.request(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.LOYALTY_POINTS_BALANCE(customerId)}`, {
-                method: 'GET',
-                headers: this.getHeaders(),
-            });
-
-            const result: BaseResponse<number> = await response.json();
-            return result;
-        } catch (error) {
-            return {
-                isSuccess: false,
-                error: 'Network error occurred'
-            };
-        }
-    },
-
     // Address methods
     async getCustomerAddresses(customerId: string): Promise<BaseResponse<CustomerAddressDto[]>> {
         try {
@@ -106,40 +94,6 @@ export const profileService = {
             });
 
             const result: BaseResponse<CustomerAddressDto[]> = await response.json();
-            return result;
-        } catch (error) {
-            return {
-                isSuccess: false,
-                error: 'Network error occurred'
-            };
-        }
-    },
-
-    async getAddress(addressId: string): Promise<BaseResponse<CustomerAddressDto>> {
-        try {
-            const response = await ApiService.request(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.GET_ADDRESS(addressId)}`, {
-                method: 'GET',
-                headers: this.getHeaders(),
-            });
-
-            const result: BaseResponse<CustomerAddressDto> = await response.json();
-            return result;
-        } catch (error) {
-            return {
-                isSuccess: false,
-                error: 'Network error occurred'
-            };
-        }
-    },
-
-    async getDefaultAddress(customerId: string): Promise<BaseResponse<CustomerAddressDto>> {
-        try {
-            const response = await ApiService.request(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.GET_DEFAULT_ADDRESS(customerId)}`, {
-                method: 'GET',
-                headers: this.getHeaders(),
-            });
-
-            const result: BaseResponse<CustomerAddressDto> = await response.json();
             return result;
         } catch (error) {
             return {
@@ -218,5 +172,57 @@ export const profileService = {
                 error: 'Network error occurred'
             };
         }
-    }
+    },
+
+    async getCustomerLoyalty(customerId: string): Promise<BaseResponse<CustomerLoyaltyDto>> {
+        try {
+            const response = await ApiService.request(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.GET_CUSTOMER_LOYALTY(customerId)}`, {
+                method: 'GET',
+                headers: this.getHeaders(),
+            });
+
+            const result: BaseResponse<CustomerLoyaltyDto> = await response.json();
+            return result;
+        } catch (error) {
+            return {
+                isSuccess: false,
+                error: 'Network error occurred'
+            };
+        }
+    },
+
+    async getCustomerProfileInfo(customerId: string): Promise<BaseResponse<CustomerProfileInfoDto>> {
+        try {
+            const response = await ApiService.request(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.GET_CUSTOMER_PROFILE_INFO(customerId)}`, {
+                method: 'GET',
+                headers: this.getHeaders(),
+            });
+
+            const result: BaseResponse<CustomerProfileInfoDto> = await response.json();
+            return result;
+        } catch (error) {
+            return {
+                isSuccess: false,
+                error: 'Network error occurred'
+            };
+        }
+    },
+
+    async deleteCustomer(customerId: string): Promise<BaseResponse<boolean>> {
+        try {
+
+            const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.DELETE_CUSTOMER(customerId)}`, {
+                method: 'DELETE',
+                headers: this.getHeaders()
+            });
+
+            const result: BaseResponse<boolean> = await response.json();
+            return result;
+        } catch (error) {
+            return {
+                isSuccess: false,
+                error: 'Network error occurred'
+            };
+        }
+    },
 };

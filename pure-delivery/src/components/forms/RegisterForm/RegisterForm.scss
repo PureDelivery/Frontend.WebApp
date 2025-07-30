@@ -1,0 +1,7 @@
+
+.email-input-valid > div > input {
+  border-color: #08e69d;
+}
+.email-input-invalid  > div > input, .email-input-taken  > div > input {
+  border-color: #ee1919 !important;
+}

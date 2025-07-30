@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Input } from '../../ui/Input/Input';
 import { Button } from '../../ui/Button/Button';
-import {RegisterFormData} from "../../../services/authService";
-import { Eye, EyeOff } from 'lucide-react';
+import {authService, RegisterFormData} from "../../../services/authService";
+import {Check, Eye, EyeOff, Loader, X} from 'lucide-react';
 import './RegisterForm.scss';
 
 interface RegisterFormProps {
@@ -16,6 +16,8 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
                                                               isLoading = false,
                                                               error
                                                           }) => {
+    const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     const [formData, setFormData] = useState<RegisterFormData>({
         firstName: '',
         lastName: '',
@@ -27,6 +29,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
     });
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [emailStatus, setEmailStatus] = useState<'idle' | 'checking' | 'valid' | 'invalid' | 'taken'>('idle');
 
     const [validationErrors, setValidationErrors] = useState<Partial<RegisterFormData>>({});
 
@@ -42,6 +45,32 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
                 ...prev,
                 [field]: undefined
             }));
+        }
+    };
+
+    const validateAndCheckEmail = async (email: string) => {
+        if (!email) {
+            setEmailStatus('idle');
+            return;
+        }
+
+        if (!EMAIL_REGEX.test(email)) {
+            setEmailStatus('invalid');
+            setValidationErrors(prev => ({ ...prev, email: 'Invalid email format' }));
+            return;
+        }
+
+        setEmailStatus('checking');
+        try {
+            const result = await authService.checkEmailAvailability(email);
+            if (result.isSuccess) {
+                setEmailStatus(result.data ? 'valid' : 'taken');
+                if (!result.data) {
+                    setValidationErrors(prev => ({ ...prev, email: 'Email is already taken' }));
+                }
+            }
+        } catch (error) {
+            setEmailStatus('idle');
         }
     };
 
@@ -65,6 +94,22 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
         e.preventDefault();
         if (validate()) {
             onSubmit(formData);
+        }
+    };
+
+    const getEmailIcon = (status: string) => {
+        switch(status) {
+            case 'checking': return <Loader size={16} className="animate-spin" />;
+            case 'valid': return <Check size={16} />;
+            default: return null;
+        }
+    };
+
+    const getEmailError = (status: string) => {
+        switch(status) {
+            case 'invalid': return 'Invalid email format';
+            case 'taken': return 'Email is already taken';
+            default: return '';
         }
     };
 
@@ -107,16 +152,23 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
                 />
             </div>
 
-            <Input
-                label="Email"
-                type="email"
-                placeholder="Enter your email"
-                value={formData.email}
-                onChange={handleChange('email')}
-                required
-                disabled={isLoading}
-                error={validationErrors.email}
-            />
+            <div className={`email-input-${emailStatus}`}>
+                <Input
+                    label="Email"
+                    type="email"
+                    placeholder="Enter your email"
+                    value={formData.email}
+                    onChange={handleChange('email')}
+                    required
+                    disabled={isLoading}
+                    error={getEmailError(emailStatus)}
+                    onBlur={() => validateAndCheckEmail(formData.email)}
+                />
+                <div className="email-status-icon">
+                    {getEmailIcon(emailStatus)}
+                </div>
+            </div>
+
 
             <Input
                 label="Phone (optional)"

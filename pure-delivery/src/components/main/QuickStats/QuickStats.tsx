@@ -5,6 +5,7 @@ import { CustomerProfileDto } from '../../../interfaces/CustomerProfileDto';
 import { StatCard } from '../../ui/StatCard/StatCard';
 import { ColorVariant } from '../../../types/ui';
 import './QuickStats.scss';
+import {CustomerSummaryDto} from "../../../interfaces/CustomerSummaryDto";
 
 interface StatItem {
     icon: typeof Gift;
@@ -14,17 +15,17 @@ interface StatItem {
 }
 
 interface QuickStatsProps {
-    profile: CustomerProfileDto | null;
+    customerSummary: CustomerSummaryDto | null;
     isLoading: boolean;
 }
 
-export const QuickStats: React.FC<QuickStatsProps> = ({ profile, isLoading }) => {
+export const QuickStats: React.FC<QuickStatsProps> = ({ customerSummary, isLoading }) => {
     const { customer } = useAuthStore();
 
     const stats: StatItem[] = [
         {
             icon: Gift,
-            value: isLoading ? '...' : (profile?.loyaltyPoints || customer?.loyaltyPoints || 0),
+            value: isLoading ? '...' : (customerSummary?.loyaltyPoints || customer?.loyaltyPoints || 0),
             label: 'Loyalty Points',
             color: 'orange'
         },
@@ -36,7 +37,7 @@ export const QuickStats: React.FC<QuickStatsProps> = ({ profile, isLoading }) =>
         },
         {
             icon: Star,
-            value: isLoading ? '...' : (profile?.userGrade ? profile.userGrade.toFixed(1) : '0.0'),
+            value: isLoading ? '...' : (customerSummary?.userGrade ? customerSummary.userGrade.toFixed(1) : '0.0'),
             label: 'Your Rating',
             color: 'yellow'
         }

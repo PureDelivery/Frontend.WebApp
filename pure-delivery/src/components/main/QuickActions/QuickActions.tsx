@@ -5,6 +5,7 @@ import { CustomerProfileDto } from '../../../interfaces/CustomerProfileDto';
 import { ActionCard } from '../../ui/ActionCard/ActionCard';
 import { ColorVariant } from '../../../types/ui';
 import './QuickActions.scss';
+import {CustomerSummaryDto} from "../../../interfaces/CustomerSummaryDto";
 
 interface ActionItem {
     icon: typeof User;
@@ -15,11 +16,11 @@ interface ActionItem {
 }
 
 interface QuickActionsProps {
-    profile: CustomerProfileDto | null;
+    customerSummary: CustomerSummaryDto | null;
     isLoading: boolean;
 }
 
-export const QuickActions: React.FC<QuickActionsProps> = ({ profile, isLoading }) => {
+export const QuickActions: React.FC<QuickActionsProps> = ({ customerSummary, isLoading }) => {
     const { customer } = useAuthStore();
 
     const actions: ActionItem[] = [
@@ -49,7 +50,7 @@ export const QuickActions: React.FC<QuickActionsProps> = ({ profile, isLoading }
             label: 'Loyalty Points',
             description: isLoading
                 ? 'Loading...'
-                : `${profile?.loyaltyPoints || customer?.loyaltyPoints || 0} points available`,
+                : `${customerSummary?.loyaltyPoints || customer?.loyaltyPoints || 0} points available`,
             path: '/profile?tab=loyalty',
             color: 'orange'
         },

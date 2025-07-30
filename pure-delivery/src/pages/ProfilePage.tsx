@@ -12,6 +12,7 @@ import { ProfileTabContent } from '..//profile/ProfileTabContent/ProfileTabConte
 import { authService } from '../services/authService';
 import toast from 'react-hot-toast';
 import '../styles/ProfilePage.scss';
+import {CustomerProfileInfoDto} from "../interfaces/CustomerProfileInfoDto";
 
 export type TabType = 'profile' | 'addresses' | 'orders' | 'loyalty' | 'achievements';
 
@@ -20,30 +21,6 @@ const ProfilePage: React.FC = () => {
     const { customer, clearSession } = useAuthStore();
 
     const activeTab = (searchParams.get('tab') as TabType) || 'profile';
-    const [profile, setProfile] = useState<CustomerProfileDto | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        loadProfile();
-    }, [customer?.id]);
-
-    const loadProfile = async () => {
-        if (!customer?.id) {
-            setIsLoading(false);
-            return;
-        }
-
-        try {
-            const result = await profileService.getCustomerWithProfile(customer.id);
-            if (result.isSuccess && result.data?.profile) {
-                setProfile(result.data.profile);
-            }
-        } catch (error) {
-            console.error('Failed to load profile:', error);
-        } finally {
-            setIsLoading(false);
-        }
-    };
 
     const handleTabChange = (tab: TabType) => {
         setSearchParams({ tab });
@@ -54,11 +31,6 @@ const ProfilePage: React.FC = () => {
         clearSession();
         toast.success('Logged out successfully');
         window.location.href = '/';
-    };
-
-    const handleProfileUpdate = async (updatedProfile: CustomerProfileDto) => {
-        setProfile(updatedProfile);
-        // Здесь можно добавить обновление в Zustand store если нужно
     };
 
     return (
@@ -97,11 +69,7 @@ const ProfilePage: React.FC = () => {
                 {/* Tab Content */}
                 <ProfileTabContent
                     activeTab={activeTab}
-                    profile={profile}
-                    isLoading={isLoading}
                     customer={customer}
-                    onProfileUpdate={handleProfileUpdate}
-                    onRefreshProfile={loadProfile}
                 />
             </div>
         </motion.div>

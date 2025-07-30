@@ -17,6 +17,8 @@ export const OrdersTab: React.FC<OrdersTabProps> = ({ customer }) => {
             className="orders-tab"
         >
             <h2>My Orders</h2>
+            <div style={{color: "red"}}>ADD ORDERS MICROSERVICE</div>
+
             <Card className="empty-state">
                 <ShoppingBag size={48} />
                 <h3>No orders yet</h3>

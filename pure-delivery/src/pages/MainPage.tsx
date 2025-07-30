@@ -8,10 +8,11 @@ import { QuickStats } from '../components/main/QuickStats/QuickStats';
 import { QuickActions } from '../components/main/QuickActions/QuickActions';
 import { ComingSoonSection } from '../components/main/ComingSoonSection/ComingSoonSection';
 import '../styles/MainPage.scss';
+import {CustomerSummaryDto} from "../interfaces/CustomerSummaryDto";
 
 const MainPage: React.FC = () => {
     const { customer } = useAuthStore();
-    const [profile, setProfile] = useState<CustomerProfileDto | null>(null);
+    const [profile, setProfile] = useState<CustomerSummaryDto | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -25,9 +26,9 @@ const MainPage: React.FC = () => {
         }
 
         try {
-            const result = await profileService.getCustomerWithProfile(customer.id);
-            if (result.isSuccess && result.data?.profile) {
-                setProfile(result.data.profile);
+            const result = await profileService.getCustomerSummary(customer.id);
+            if (result.isSuccess && result.data) {
+                setProfile(result.data);
             }
         } catch (error) {
             console.error('Failed to load profile:', error);
@@ -51,16 +52,16 @@ const MainPage: React.FC = () => {
                     showThemeToggle
                     showLogout
                     showAvatar
-                    profile={profile}
+                    customerSummary={profile}
                 />
 
                 <QuickStats
-                    profile={profile}
+                    customerSummary={profile}
                     isLoading={isLoading}
                 />
 
                 <QuickActions
-                    profile={profile}
+                    customerSummary={profile}
                     isLoading={isLoading}
                 />
 

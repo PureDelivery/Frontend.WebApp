@@ -49,3 +49,10 @@
   font-size: 0.875rem;
   color: var(--text-tertiary);
 }
+
+.email-input-valid {
+  border-color: #08e69d;
+}
+.email-input-invalid, .email-input-taken {
+  border-color: var(--danger-400) !important;
+}

@@ -18,7 +18,6 @@ import {BaseAddressFormData} from "../../components/modals/AddressModals/BaseAdd
 
 interface AddressesTabProps {
     customer: CustomerSessionDto | null;
-    isLoading: boolean;
 }
 
 // Confirmation Modal Component
@@ -52,7 +51,7 @@ const ConfirmationModal: React.FC<{
     );
 };
 
-export const AddressesTab: React.FC<AddressesTabProps> = ({ customer, isLoading }) => {
+export const AddressesTab: React.FC<AddressesTabProps> = ({ customer }) => {
     const [addresses, setAddresses] = useState<CustomerAddressDto[]>([]);
     const [isLoadingAddresses, setIsLoadingAddresses] = useState(true);
     const [isDeletingAddress, setIsDeletingAddress] = useState<string | null>(null);
@@ -221,7 +220,7 @@ export const AddressesTab: React.FC<AddressesTabProps> = ({ customer, isLoading 
         }
     };
 
-    if (isLoading || isLoadingAddresses) {
+    if (isLoadingAddresses) {
         return (
             <motion.div
                 initial={{ opacity: 0, y: 20 }}

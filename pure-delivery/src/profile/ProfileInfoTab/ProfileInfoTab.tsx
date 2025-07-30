@@ -1,26 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Edit, Camera, User, Mail, Gift, Calendar, Star, Phone, CreditCard, ChevronDown, Lock } from 'lucide-react';
 import { Card } from '../../components/ui/Card/Card';
 import { Button } from '../../components/ui/Button/Button';
 import { Input } from '../../components/ui/Input/Input';
 import { UserAvatar } from '../../components/ui/UserAvatar/UserAvatar';
-import { CustomerProfileDto, UpdateProfileRequest } from '../../interfaces/CustomerProfileDto';
-import { CustomerSessionDto } from '../../store/authStore';
+import { CustomerProfileInfoDto } from '../../interfaces/CustomerProfileInfoDto';
+import { UpdateProfileRequest } from '../../interfaces/CustomerProfileDto';
+import { useAuthStore } from '../../store/authStore';
 import { profileService } from '../../services/profileService';
 import toast from 'react-hot-toast';
 import './ProfileInfoTab.scss';
 import { ChangePasswordModal } from '../../components/modals/PasswordModals/ChangePassword/ChangePasswordModal';
+import { DeleteAccountButton } from '../../components/ui/Button/DeleteAccountButton';
+import {DeleteAccountModal} from "../../components/modals/DeleteAccountModal/DeleteAccountModal";
 
-interface ProfileInfoTabProps {
-    profile: CustomerProfileDto | null;
-    isLoading: boolean;
-    customer: CustomerSessionDto | null;
-    onProfileUpdate: (profile: CustomerProfileDto) => void;
-    onRefreshProfile: () => Promise<void>;
-}
-
-// Dropdown компонент для Payment Method
+// Dropdown компонент для Payment Method (оставить как был)
 const PaymentMethodDropdown: React.FC<{
     value: string;
     onChange: (value: string) => void;
@@ -82,13 +77,10 @@ const PaymentMethodDropdown: React.FC<{
     );
 };
 
-export const ProfileInfoTab: React.FC<ProfileInfoTabProps> = ({
-                                                                  profile,
-                                                                  isLoading,
-                                                                  customer,
-                                                                  onProfileUpdate,
-                                                                  onRefreshProfile
-                                                              }) => {
+export const ProfileInfoTab: React.FC = () => {
+    const { customer } = useAuthStore();
+    const [profileInfo, setProfileInfo] = useState<CustomerProfileInfoDto | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
     const [isEditing, setIsEditing] = useState(false);
     const [isUpdating, setIsUpdating] = useState(false);
     const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
@@ -99,31 +91,61 @@ export const ProfileInfoTab: React.FC<ProfileInfoTabProps> = ({
         dateOfBirth: '',
         preferredPaymentMethod: ''
     });
+
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isChangePasswordModalOpen, setIsChangePasswordModalOpen] = useState(false);
 
+    useEffect(() => {
+        if (customer?.id) {
+            loadProfileInfo();
+        }
+    }, [customer?.id]);
+
     // Инициализация формы при изменении профиля
-    React.useEffect(() => {
-        if (profile) {
+    useEffect(() => {
+        if (profileInfo) {
             setFormData({
-                firstName: profile.firstName || '',
-                lastName: profile.lastName || '',
-                phone: profile.phone || '',
-                dateOfBirth: profile.dateOfBirth ? profile.dateOfBirth.split('T')[0] : '',
-                preferredPaymentMethod: profile.preferredPaymentMethod || ''
+                firstName: profileInfo.firstName || '',
+                lastName: profileInfo.lastName || '',
+                phone: profileInfo.phone || '',
+                dateOfBirth: profileInfo.dateOfBirth ? profileInfo.dateOfBirth.split('T')[0] : '',
+                preferredPaymentMethod: profileInfo.preferredPaymentMethod || ''
             });
         }
-    }, [profile]);
+    }, [profileInfo]);
+
+    const loadProfileInfo = async () => {
+        if (!customer?.id) {
+            setIsLoading(false);
+            return;
+        }
+
+        try {
+            setIsLoading(true);
+            const result = await profileService.getCustomerProfileInfo(customer.id);
+            if (result.isSuccess && result.data) {
+                setProfileInfo(result.data);
+            } else {
+                toast.error('Failed to load profile info');
+            }
+        } catch (error) {
+            console.error('Failed to load profile info:', error);
+            toast.error('Failed to load profile info');
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     const handleEditToggle = () => {
         if (isEditing) {
             // Отменяем изменения
-            if (profile) {
+            if (profileInfo) {
                 setFormData({
-                    firstName: profile.firstName || '',
-                    lastName: profile.lastName || '',
-                    phone: profile.phone || '',
-                    dateOfBirth: profile.dateOfBirth ? profile.dateOfBirth.split('T')[0] : '',
-                    preferredPaymentMethod: profile.preferredPaymentMethod || ''
+                    firstName: profileInfo.firstName || '',
+                    lastName: profileInfo.lastName || '',
+                    phone: profileInfo.phone || '',
+                    dateOfBirth: profileInfo.dateOfBirth ? profileInfo.dateOfBirth.split('T')[0] : '',
+                    preferredPaymentMethod: profileInfo.preferredPaymentMethod || ''
                 });
             }
         }
@@ -157,7 +179,7 @@ export const ProfileInfoTab: React.FC<ProfileInfoTabProps> = ({
             if (result.isSuccess) {
                 toast.success('Profile updated successfully!');
                 setIsEditing(false);
-                await onRefreshProfile(); // Перезагружаем профиль
+                await loadProfileInfo(); // Перезагружаем профиль
             } else {
                 toast.error(result.error || 'Failed to update profile');
             }
@@ -194,7 +216,7 @@ export const ProfileInfoTab: React.FC<ProfileInfoTabProps> = ({
 
             if (result.isSuccess) {
                 toast.success('Avatar updated successfully!');
-                await onRefreshProfile(); // Перезагружаем профиль
+                await loadProfileInfo(); // Перезагружаем профиль
             } else {
                 toast.error(result.error || 'Failed to upload avatar');
             }
@@ -253,7 +275,7 @@ export const ProfileInfoTab: React.FC<ProfileInfoTabProps> = ({
                 <div className="avatar-container">
                     <div className="avatar-wrapper">
                         <UserAvatar
-                            src={profile?.avatarUrl}
+                            src={profileInfo?.avatarUrl}
                             alt={`${customer?.fullName} avatar`}
                             size="xl"
                         />
@@ -274,14 +296,8 @@ export const ProfileInfoTab: React.FC<ProfileInfoTabProps> = ({
                     </div>
 
                     <div className="avatar-info">
-                        <h3>{profile?.firstName} {profile?.lastName}</h3>
+                        <h3>{profileInfo?.firstName} {profileInfo?.lastName}</h3>
                         <p>{customer?.email}</p>
-                        <div className="user-stats">
-                            <span className="stat">
-                                <Star size={14} />
-                                {profile?.userGrade?.toFixed(1) || '0.0'} ({profile?.totalRatings || 0} reviews)
-                            </span>
-                        </div>
                     </div>
                 </div>
             </Card>
@@ -351,16 +367,8 @@ export const ProfileInfoTab: React.FC<ProfileInfoTabProps> = ({
                         <span>Email: {customer?.email}</span>
                     </div>
                     <div className="info-item">
-                        <Gift size={16} />
-                        <span>Loyalty Points: {profile?.loyaltyPoints || 0}</span>
-                    </div>
-                    <div className="info-item">
                         <Calendar size={16} />
-                        <span>Member since: {formatDate(profile?.createdAt)}</span>
-                    </div>
-                    <div className="info-item">
-                        <Calendar size={16} />
-                        <span>Last order: {formatDate(profile?.lastOrderDate)}</span>
+                        <span>Member since: {formatDate(profileInfo?.createdAt)}</span>
                     </div>
                     <div className="account-actions">
                         <Button
@@ -371,12 +379,20 @@ export const ProfileInfoTab: React.FC<ProfileInfoTabProps> = ({
                             Change Password
                         </Button>
                     </div>
+                    <DeleteAccountButton onDeleteClick={() => setIsDeleteModalOpen(true)} />
+
                 </div>
             </Card>
+
             <ChangePasswordModal
                 isOpen={isChangePasswordModalOpen}
                 onClose={() => setIsChangePasswordModalOpen(false)}
             />
+            <DeleteAccountModal
+                isOpen={isDeleteModalOpen}
+                onClose={() => setIsDeleteModalOpen(false)}
+            />
+
         </motion.div>
     );
 };

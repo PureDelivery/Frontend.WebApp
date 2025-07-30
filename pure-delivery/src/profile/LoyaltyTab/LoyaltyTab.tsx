@@ -1,19 +1,51 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Gift, TrendingUp, Award, Calendar } from 'lucide-react';
 import { Card } from '../../components/ui/Card/Card';
-import { CustomerSessionDto } from '../../store/authStore';
-import { CustomerProfileDto } from '../../interfaces/CustomerProfileDto';
+import { CustomerLoyaltyDto } from '../../interfaces/CustomerLoyaltyDto';
+import { useAuthStore } from '../../store/authStore';
+import toast from 'react-hot-toast';
 import './LoyaltyTab.scss';
+import {profileService} from "../../services/profileService";
 
 interface LoyaltyTabProps {
-    profile: CustomerProfileDto | null;
-    customer: CustomerSessionDto | null;
-    isLoading: boolean;
+    isLoading?: boolean;
 }
 
-export const LoyaltyTab: React.FC<LoyaltyTabProps> = ({ profile, customer, isLoading }) => {
-    if (isLoading) {
+export const LoyaltyTab: React.FC<LoyaltyTabProps> = ({ isLoading: externalLoading }) => {
+    const { customer } = useAuthStore();
+    const [loyaltyData, setLoyaltyData] = useState<CustomerLoyaltyDto | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        if (customer?.id) {
+            loadLoyaltyData();
+        }
+    }, [customer?.id]);
+
+    const loadLoyaltyData = async () => {
+        if (!customer?.id) return;
+
+        try {
+            setIsLoading(true);
+            const response = await profileService.getCustomerLoyalty(customer.id);
+
+            if (response.isSuccess && response.data) {
+                setLoyaltyData(response.data);
+            } else {
+                toast.error('Failed to load loyalty data');
+            }
+        } catch (error) {
+            console.error('Error loading loyalty data:', error);
+            toast.error('Failed to load loyalty data');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const loading = isLoading || externalLoading;
+
+    if (loading) {
         return (
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -38,8 +70,7 @@ export const LoyaltyTab: React.FC<LoyaltyTabProps> = ({ profile, customer, isLoa
             className="loyalty-tab"
         >
             <h2>Loyalty Program</h2>
-
-            <div style={{color: "red"}}>TEST LOYALTY FROM FRONTEND</div>
+            <div style={{color: "red"}}>ADD LOYALTY MICROSERVICE</div>
 
             {/* Current Points */}
             <Card className="loyalty-balance-card">
@@ -47,7 +78,7 @@ export const LoyaltyTab: React.FC<LoyaltyTabProps> = ({ profile, customer, isLoa
                     <Gift size={32} />
                     <div>
                         <h3>Current Balance</h3>
-                        <p className="balance-amount">{profile?.loyaltyPoints || 0} points</p>
+                        <p className="balance-amount">{loyaltyData?.loyaltyPoints || 0} points</p>
                     </div>
                 </div>
             </Card>

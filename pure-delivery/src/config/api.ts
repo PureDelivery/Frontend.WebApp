@@ -8,7 +8,16 @@ export const API_CONFIG = {
         LOGOUT: '/auth/logout',
         REQUEST_FORGOT_PASSWORD: '/auth/request-forgot-password',
         FORGOT_PASSWORD: '/auth/change-password-with-otp',
-        CHANGE_PASSWORD_SIMPLE: '/auth/change-password',         // Для смены с текущим паролем
+        CHANGE_PASSWORD_SIMPLE: '/auth/change-password',
+
+        CHECK_EMAIL_AVAILABILITY: (email: string) => `/auth/email-availability/${email}`,
+
+        DELETE_CUSTOMER: (customerId: string) => `/auth/${customerId}`,
+
+        GET_CUSTOMER_SUMMARY: (customerId: string) => `/Customer/${customerId}`,
+
+        GET_CUSTOMER_LOYALTY: (customerId: string) => `/Customer/${customerId}/loyalty`,
+        GET_CUSTOMER_PROFILE_INFO: (customerId: string) => `/Customer/${customerId}/profile-info`,
 
         GET_CUSTOMER_WITH_PROFILE: (customerId: string) => `/Customer/${customerId}/profile`,
         GET_CUSTOMER_FULL: (customerId: string) => `/Customer/${customerId}/full`,

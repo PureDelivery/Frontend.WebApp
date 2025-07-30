@@ -14,7 +14,7 @@
   --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.2);
 
   // Переменные для кнопок
-  --button-primary-bg: linear-gradient(135deg, #7e6c31, #5104c1);
+  --button-primary-bg: linear-gradient(135deg, #0f172a 0%, #3e293b 50%);
   --button-primary-color: #ffffff;
   --button-primary-shadow: rgba(102, 126, 234, 0.3);
   --button-outline-bg: var(--bg-secondary);
@@ -24,6 +24,7 @@
   --button-danger-bg: linear-gradient(135deg, #ef4444, #dc2626);
   --button-danger-color: #ffffff;
   --button-danger-shadow: rgba(239, 68, 68, 0.3);
+  --button-action: #3e293b;
 
   // Action card colors
   --action-blue: #034fcb;
@@ -64,6 +65,7 @@
   --button-danger-bg: linear-gradient(135deg, #f87171, #ef4444);
   --button-danger-color: #ffffff;
   --button-danger-shadow: rgba(248, 113, 113, 0.4);
+  --button-action: #407eea;
 
   // Action card colors для темной темы
   --action-blue: #84b4f0;
@@ -271,7 +273,7 @@
     }
 
     .auth-link-text {
-      color: #667eea;
+      color: var(--button-action);
       text-decoration: none;
       font-weight: 500;
 
